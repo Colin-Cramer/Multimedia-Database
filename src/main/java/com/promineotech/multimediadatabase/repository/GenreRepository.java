@@ -1,5 +1,9 @@
 package com.promineotech.multimediadatabase.repository;
 
-public interface GenreRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.promineotech.multimediadatabase.entity.Genre;
+
+public interface GenreRepository extends CrudRepository<Genre, Long>{
 
 }

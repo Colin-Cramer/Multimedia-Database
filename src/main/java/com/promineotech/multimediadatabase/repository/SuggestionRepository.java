@@ -1,5 +1,9 @@
 package com.promineotech.multimediadatabase.repository;
 
-public interface SuggestionRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.promineotech.multimediadatabase.entity.Suggestion;
+
+public interface SuggestionRepository extends CrudRepository<Suggestion, Long>{
 
 }

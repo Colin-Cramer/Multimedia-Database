@@ -1,13 +1,29 @@
 package com.promineotech.multimediadatabase.entity;
 
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
 public class User {
 
 	private Long id;
 	private String username;
 	private String password;
 	private String email;
-	private String dob;
+	
+	@JsonIgnore
+	private Set<Review> reviews;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -24,10 +40,12 @@ public class User {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
 
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -40,12 +58,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getDob() {
-		return dob;
+	@OneToMany(mappedBy = "user")
+	public Set<Review> getReviews() {
+		return reviews;
 	}
 
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
 	}
-
 }
