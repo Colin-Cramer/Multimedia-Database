@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.promineotech.multimediadatabase.util.AccountLevel;
 
 @Entity
 public class User {
@@ -18,7 +19,8 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
-	
+	private AccountLevel level;
+
 	@JsonIgnore
 	private Set<Review> reviews;
 
@@ -65,5 +67,13 @@ public class User {
 
 	public void setReviews(Set<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public AccountLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(AccountLevel level) {
+		this.level = level;
 	}
 }

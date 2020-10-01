@@ -1,5 +1,9 @@
 package com.promineotech.multimediadatabase.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Media {
 
 	private Long id;
@@ -14,6 +18,8 @@ public class Media {
 		return id;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public void setId(Long id) {
 		this.id = id;
 	}
