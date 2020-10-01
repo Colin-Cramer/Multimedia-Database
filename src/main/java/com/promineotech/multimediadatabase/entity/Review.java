@@ -1,44 +1,31 @@
 package com.promineotech.multimediadatabase.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Review {
 
 	private Long id;
-	private Long userId;
-	private Long mediaId;
-	private String username;
 	private String content;
 	private double rating;
+	private User user;
+	
+	@JsonIgnore
+	private Media media;
 
 	public Long getId() {
 		return id;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public Long getMediaId() {
-		return mediaId;
-	}
-
-	public void setMediaId(Long mediaId) {
-		this.mediaId = mediaId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getContent() {
@@ -55,6 +42,26 @@ public class Review {
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "mediaId")
+	public Media getmedia() {
+		return media;
+	}
+	
+	public void setMedia(Media media) {
+		this.media = media;
 	}
 
 }

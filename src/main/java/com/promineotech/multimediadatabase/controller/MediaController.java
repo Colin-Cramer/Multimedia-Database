@@ -13,7 +13,7 @@ import com.promineotech.multimediadatabase.entity.Media;
 import com.promineotech.multimediadatabase.service.MediaService;
 
 @RestController
-@RequestMapping("/media")
+@RequestMapping("/users/{userId}/media")
 public class MediaController {
 
 	@Autowired
@@ -25,7 +25,7 @@ public class MediaController {
 	}
 	
 	@RequestMapping(value = "/{mediaId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getPost(@PathVariable Long mediaId) {
+	public ResponseEntity<Object> getMedia(@PathVariable Long mediaId) {
 		return new ResponseEntity<Object>(service.getMedia(mediaId), HttpStatus.OK);
 	}
 	
