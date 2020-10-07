@@ -1,5 +1,6 @@
 package com.promineotech.multimediadatabase.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class Review {
 
 	private Long id;
@@ -18,12 +20,12 @@ public class Review {
 	@JsonIgnore
 	private Media media;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public void setId(Long id) {
 		this.id = id;
 	}

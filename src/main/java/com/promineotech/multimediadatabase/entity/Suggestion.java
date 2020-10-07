@@ -2,13 +2,21 @@ package com.promineotech.multimediadatabase.entity;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Suggestion {
 
 	private Long id;
 	private Long mediaId;
 	private Long suggestedId;
-	private Set<Media> media;
+	private Set<Media> suggestion;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -33,12 +41,12 @@ public class Suggestion {
 		this.suggestedId = suggestedId;
 	}
 
-	public Set<Media> getMedia() {
-		return media;
+	public Set<Media> getSuggestion() {
+		return suggestion;
 	}
 
-	public void setMedia(Set<Media> media) {
-		this.media = media;
+	public void setSuggestion(Set<Media> media) {
+		this.suggestion = media;
 	}
 
 }

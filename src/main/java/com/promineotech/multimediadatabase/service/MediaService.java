@@ -46,7 +46,7 @@ public class MediaService {
 			throw new Exception("Media not found.");
 		}
 		foundMedia.setTitle(media.getTitle());
-		foundMedia.setGenre(media.getGenre());
+		foundMedia.setGenres(media.getGenres());
 		foundMedia.setSummary(media.getSummary());
 		return repo.save(foundMedia);
 	}

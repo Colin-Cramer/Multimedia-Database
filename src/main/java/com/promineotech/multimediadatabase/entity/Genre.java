@@ -1,10 +1,18 @@
 package com.promineotech.multimediadatabase.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Genre {
 
 	private Long id;
-	private String genre;
+	private String genreType;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -13,12 +21,12 @@ public class Genre {
 		this.id = id;
 	}
 
-	public String getGenre() {
-		return genre;
+	public String getGenreType() {
+		return genreType;
 	}
 
-	public void setGenre(String genre) {
-		this.genre = genre;
+	public void setGenreType(String genre) {
+		this.genreType = genre;
 	}
 
 }

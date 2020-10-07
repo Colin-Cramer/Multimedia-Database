@@ -2,6 +2,7 @@ package com.promineotech.multimediadatabase.entity;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@Entity
 public class Media {
 
 	private Long id;
@@ -16,9 +18,9 @@ public class Media {
 	private String summary;
 	private double avgRating;
 	private String creator;
-	private String genre;
 	private String type;
 	private User user;
+	private Set<Genre> genres;
 	private Set<Review> reviews;
 
 	@Id
@@ -63,14 +65,6 @@ public class Media {
 		this.creator = creator;
 	}
 
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -96,6 +90,14 @@ public class Media {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Set<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
 	}
 
 }
