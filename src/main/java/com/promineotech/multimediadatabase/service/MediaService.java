@@ -1,8 +1,11 @@
 package com.promineotech.multimediadatabase.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.promineotech.multimediadatabase.entity.Genre;
 import com.promineotech.multimediadatabase.entity.Media;
 import com.promineotech.multimediadatabase.entity.User;
 import com.promineotech.multimediadatabase.repository.MediaRepository;
@@ -13,17 +16,17 @@ import com.promineotech.multimediadatabase.util.AccountLevel;
 public class MediaService {
 	
 	@Autowired
-	private MediaRepository repo;
+	private MediaRepository mediaRepo;
 
 	@Autowired
 	private UserRepository userRepo;
 	
 	public Iterable<Media> getAllMedia() {
-		return repo.findAll();
+		return mediaRepo.findAll();
 	}
 	
 	public Media getMedia(Long id) {
-		return repo.findOne(id);
+		return mediaRepo.findOne(id);
 	}
 	
 	public Media createMedia(Media media, Long userId) throws Exception {
@@ -33,12 +36,12 @@ public class MediaService {
 		} else if(user.getLevel() != AccountLevel.ADMIN) {
 			throw new Exception("Only an admin can create a media page.");
 		}
-		return repo.save(media);
+		return mediaRepo.save(media);
 	}
 	
 	public Media updateMedia(Media media, Long userId, Long id) throws Exception {
 		User user = userRepo.findOne(userId);
-		Media foundMedia = repo.findOne(id);
+		Media foundMedia = mediaRepo.findOne(id);
 		if(user.getLevel() != AccountLevel.ADMIN) {
 			throw new Exception("Only an admin can update a media page.");
 		}
@@ -48,7 +51,18 @@ public class MediaService {
 		foundMedia.setTitle(media.getTitle());
 		foundMedia.setGenres(media.getGenres());
 		foundMedia.setSummary(media.getSummary());
-		return repo.save(foundMedia);
+		return mediaRepo.save(foundMedia);
 	}
 	
+//	public List<Media> suggestByGenreId(List<Genre> genres, Long genreId) {
+//		List<Genre> genres1 = new ArrayList<Genre>();
+//		List<Media> media = new ArrayList<Media>();
+//		for(int i = 0; i < genres.size(); i++) {
+//			if(genres.get(i).getGenreId() == genreId) {
+//				genres1
+//			}
+//		}
+//		List<Media> media = (List<Media>) mediaRepo.findAllByGenreId(genres);
+//		return media;
+//	}
 }

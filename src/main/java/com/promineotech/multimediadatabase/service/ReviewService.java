@@ -14,13 +14,21 @@ import com.promineotech.multimediadatabase.repository.UserRepository;
 public class ReviewService {
 
 	@Autowired
-	private ReviewRepository repo;
+	private ReviewRepository reviewRepo;
 	
 	@Autowired
 	private MediaRepository mediaRepo;
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	public Iterable<Review> getAllReviews() {
+		return reviewRepo.findAll();
+	}
+	
+	public Review getReview(Long reviewId) {
+		return reviewRepo.findOne(reviewId);
+	}
 	
 	public Review createReview(Review review, Long userId, Long mediaId) throws Exception {
 		User user = userRepo.findOne(userId);
@@ -30,21 +38,21 @@ public class ReviewService {
 		}
 		review.setUser(user);
 		review.setMedia(media);
-		return repo.save(review);
+		return reviewRepo.save(review);
 	}
 	
-	public Review updateReview(Review review, Long id, Long mediaId) throws Exception {
-		Review foundReview = repo.findOne(id);
+	public Review updateReview(Review review, Long reviewId, Long mediaId) throws Exception {
+		Review foundReview = reviewRepo.findOne(reviewId);
 		if(foundReview == null) {
 			throw new Exception("Review not found.");
 		}
 		foundReview.setContent(review.getContent());
 		foundReview.setRating(review.getRating());
-		return repo.save(foundReview);
+		return reviewRepo.save(foundReview);
 	}
 	
 	public void deleteReview(Long reviewId) {
-		repo.delete(reviewId);
+		reviewRepo.delete(reviewId);
 	}
 	
 }

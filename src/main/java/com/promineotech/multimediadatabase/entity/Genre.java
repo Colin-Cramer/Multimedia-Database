@@ -1,24 +1,27 @@
 package com.promineotech.multimediadatabase.entity;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Genre {
 
-	private Long id;
+	private Long genreId;
 	private String genreType;
+	private List<Media> media;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
+	public Long getGenreId() {
+		return genreId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setGenreId(Long id) {
+		this.genreId = id;
 	}
 
 	public String getGenreType() {
@@ -29,4 +32,12 @@ public class Genre {
 		this.genreType = genre;
 	}
 
+	@ManyToMany(mappedBy = "genres")
+	public List<Media> getMedia() {
+		return media;
+	}
+
+	public void setMedia(List<Media> media) {
+		this.media = media;
+	}
 }

@@ -19,6 +19,16 @@ public class ReviewController {
 	@Autowired
 	private ReviewService service;
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Object> getAllReviews() {
+		return new ResponseEntity<Object>(service.getAllReviews(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{reviewId}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getReview(@PathVariable Long reviewId) {
+		return new ResponseEntity<Object>(service.getReview(reviewId), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createReview(@RequestBody Review review, @PathVariable Long userId, @PathVariable Long mediaId) {
 		try {

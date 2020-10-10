@@ -17,10 +17,13 @@ public class AuthService {
 	@Autowired
 	private UserRepository repo;
 	
+	
+	
 	public User register(Credentials cred) throws AuthenticationException {
 		User user = new User();
 		user.setUsername(cred.getUsername());
 		user.setHash((BCrypt.hashpw(cred.getPassword(), BCrypt.gensalt())));
+		user.setLevel(cred.getLevel());
 		try {
 			repo.save(user);
 			return user;
@@ -42,7 +45,6 @@ public class AuthService {
 			User oldUser = repo.findOne(id);
 			oldUser.setUsername(cred.getUsername());
 			user.setHash((BCrypt.hashpw(cred.getPassword(), BCrypt.gensalt())));
-			oldUser.setEmail(user.getEmail());
 			return repo.save(oldUser);
 		} catch (DataIntegrityViolationException e) {
 			throw new AuthenticationException("Information not valid.");
