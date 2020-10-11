@@ -20,12 +20,12 @@ public class MediaController {
 	private MediaService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Object> getAllMedia() {
+	public ResponseEntity<Object> getAllMedia() throws Exception {
 		return new ResponseEntity<Object>(service.getAllMedia(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{mediaId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getMedia(@PathVariable Long mediaId) {
+	public ResponseEntity<Object> getMedia(@PathVariable Long mediaId) throws Exception {
 		return new ResponseEntity<Object>(service.getMedia(mediaId), HttpStatus.OK);
 	}
 	

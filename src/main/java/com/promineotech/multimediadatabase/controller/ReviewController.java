@@ -20,12 +20,12 @@ public class ReviewController {
 	private ReviewService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Object> getAllReviews() {
+	public ResponseEntity<Object> getAllReviews() throws Exception {
 		return new ResponseEntity<Object>(service.getAllReviews(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{reviewId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getReview(@PathVariable Long reviewId) {
+	public ResponseEntity<Object> getReview(@PathVariable Long reviewId) throws Exception {
 		return new ResponseEntity<Object>(service.getReview(reviewId), HttpStatus.OK);
 	}
 	
@@ -48,7 +48,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/{reviewId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteReview(@PathVariable Long reviewId) {
+	public ResponseEntity<Object> deleteReview(@PathVariable Long reviewId) throws Exception {
 		service.deleteReview(reviewId);
 		return new ResponseEntity<Object>("Deleted review with id: " + reviewId, HttpStatus.OK);
 	}

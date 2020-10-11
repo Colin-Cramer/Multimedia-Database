@@ -1,5 +1,6 @@
 package com.promineotech.multimediadatabase.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Media {
 	private double avgRating;
 	private String creator;
 	private User user;
+	private Long genreId;
 	private List<Genre> genres;
 	private List<Review> reviews;
 
@@ -49,8 +51,16 @@ public class Media {
 		this.summary = summary;
 	}
 
-	public double getAvgRating() {
-		return avgRating;
+	//How do I make this generate?
+	public double getAvgRating(List<Review> reviews) {
+		List<Double> ratings = new ArrayList<Double>();
+		for(int i = 0; i < reviews.size(); i++) {
+			ratings.add(reviews.get(i).getRating());
+		}
+		for(double rating : ratings) {
+			avgRating += rating;
+		}
+		return avgRating / ratings.size();
 	}
 
 	public void setAvgRating(double avgRating) {
@@ -94,5 +104,13 @@ public class Media {
 
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
+	}
+
+	public Long getGenreId() {
+		return genreId;
+	}
+
+	public void setGenreId(Long genreId) {
+		this.genreId = genreId;
 	}
 }

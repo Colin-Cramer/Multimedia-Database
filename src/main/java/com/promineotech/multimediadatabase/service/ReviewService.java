@@ -1,5 +1,7 @@
 package com.promineotech.multimediadatabase.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ import com.promineotech.multimediadatabase.repository.UserRepository;
 @Service
 public class ReviewService {
 
+	private static final Logger logger = LogManager.getLogger(ReviewService.class);
+
+	
 	@Autowired
 	private ReviewRepository reviewRepo;
 	
@@ -22,12 +27,22 @@ public class ReviewService {
 	@Autowired
 	private UserRepository userRepo;
 	
-	public Iterable<Review> getAllReviews() {
-		return reviewRepo.findAll();
+	public Iterable<Review> getAllReviews() throws Exception {
+		try {
+			return reviewRepo.findAll();
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to retrieve all reviews." + e);
+			throw new Exception("Unable to retrieve reviews.");
+		}
 	}
 	
-	public Review getReview(Long reviewId) {
-		return reviewRepo.findOne(reviewId);
+	public Review getReview(Long reviewId) throws Exception {
+		try {
+			return reviewRepo.findOne(reviewId);
+		} catch (Exception e) {
+			logger.error("Exception occurred while tring to retrieve review: " + reviewId, e);
+			throw new Exception("Unable to retrieve the review.");
+		}
 	}
 	
 	public Review createReview(Review review, Long userId, Long mediaId) throws Exception {
@@ -51,8 +66,13 @@ public class ReviewService {
 		return reviewRepo.save(foundReview);
 	}
 	
-	public void deleteReview(Long reviewId) {
-		reviewRepo.delete(reviewId);
+	public void deleteReview(Long reviewId) throws Exception {
+		try {
+			reviewRepo.delete(reviewId);
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to delete review" + e);
+			throw new Exception("Unable to delete review.");
+		}
 	}
 	
 }

@@ -2,6 +2,9 @@ package com.promineotech.multimediadatabase.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +18,31 @@ import com.promineotech.multimediadatabase.util.AccountLevel;
 @Service
 public class MediaService {
 	
+	private static final Logger logger = LogManager.getLogger(MediaService.class);
+
+	
 	@Autowired
 	private MediaRepository mediaRepo;
 
 	@Autowired
 	private UserRepository userRepo;
 	
-	public Iterable<Media> getAllMedia() {
-		return mediaRepo.findAll();
+	public Iterable<Media> getAllMedia() throws Exception {
+		try {
+			return mediaRepo.findAll();
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to retrieve all media." + e);
+			throw new Exception("Unable to retrieve all media.");
+		}
 	}
 	
-	public Media getMedia(Long id) {
-		return mediaRepo.findOne(id);
+	public Media getMedia(Long mediaId) throws Exception {
+		try {
+			return mediaRepo.findOne(mediaId);
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to retrieve media: " + mediaId, e);
+			throw new Exception("Unable to retrieve media.");
+		}
 	}
 	
 	public Media createMedia(Media media, Long userId) throws Exception {
@@ -54,15 +70,14 @@ public class MediaService {
 		return mediaRepo.save(foundMedia);
 	}
 	
-//	public List<Media> suggestByGenreId(List<Genre> genres, Long genreId) {
-//		List<Genre> genres1 = new ArrayList<Genre>();
-//		List<Media> media = new ArrayList<Media>();
-//		for(int i = 0; i < genres.size(); i++) {
-//			if(genres.get(i).getGenreId() == genreId) {
-//				genres1
-//			}
-//		}
-//		List<Media> media = (List<Media>) mediaRepo.findAllByGenreId(genres);
-//		return media;
-//	}
+	public List<Media> suggestByGenreId(List<Media> media, List<Genre> genres, Long genreId) {
+		List<Genre> newGenres = new ArrayList<Genre>();
+		for(int i = 0; i < genres.size(); i++) {
+			if(genres.get(i).getGenreId() == genreId) {
+				newGenres.add(genres.get(i));
+			}
+		}
+		List<Media> newMedia = (List<Media>) mediaRepo.findAllByGenreId(media, newGenres, genreId);
+		return newMedia;
+	}
 }

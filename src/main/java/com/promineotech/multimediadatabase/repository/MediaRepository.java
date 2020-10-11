@@ -8,6 +8,6 @@ import com.promineotech.multimediadatabase.entity.Media;
 
 public interface MediaRepository extends CrudRepository<Media, Long>{
 
-	//public List<Media> findAllByGenreId(List<Genre> genres, Long genreId);
+	public List<Media> findAllByGenreId(List<Media> media, List<Genre> genres, Long genreId);
 	
 }

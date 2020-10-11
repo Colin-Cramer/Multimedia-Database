@@ -20,12 +20,12 @@ public class GenreController {
 	private GenreService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Object> getAllGenres() {
+	public ResponseEntity<Object> getAllGenres() throws Exception {
 		return new ResponseEntity<Object>(service.getAllGenres(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{genreId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getGenre(@PathVariable Long genreId) {
+	public ResponseEntity<Object> getGenre(@PathVariable Long genreId) throws Exception {
 		return new ResponseEntity<Object>(service.getGenre(genreId), HttpStatus.OK);
 	}
 	
