@@ -18,7 +18,7 @@ public class Review {
 	private User user;
 	
 	@JsonIgnore
-	private Media media;
+	private Long mediaId;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,12 +58,12 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name = "mediaId")
-	public Media getmedia() {
-		return media;
+	public Long getMediaId() {
+		return mediaId;
 	}
 	
-	public void setMedia(Media media) {
-		this.media = media;
+	public void setMediaId(Long mediaId) {
+		this.mediaId = id;
 	}
 
 }

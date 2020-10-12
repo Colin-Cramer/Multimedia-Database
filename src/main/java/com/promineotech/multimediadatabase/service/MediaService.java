@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.promineotech.multimediadatabase.entity.Genre;
 import com.promineotech.multimediadatabase.entity.Media;
+import com.promineotech.multimediadatabase.entity.Review;
 import com.promineotech.multimediadatabase.entity.User;
 import com.promineotech.multimediadatabase.repository.MediaRepository;
+import com.promineotech.multimediadatabase.repository.ReviewRepository;
 import com.promineotech.multimediadatabase.repository.UserRepository;
 import com.promineotech.multimediadatabase.util.AccountLevel;
 
@@ -20,12 +22,14 @@ public class MediaService {
 	
 	private static final Logger logger = LogManager.getLogger(MediaService.class);
 
-	
 	@Autowired
 	private MediaRepository mediaRepo;
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private ReviewRepository reviewRepo;
 	
 	public Iterable<Media> getAllMedia() throws Exception {
 		try {
@@ -39,6 +43,7 @@ public class MediaService {
 	public Media getMedia(Long mediaId) throws Exception {
 		try {
 			return mediaRepo.findOne(mediaId);
+			return calculateAvgRating(mediaId);
 		} catch (Exception e) {
 			logger.error("Exception occurred while trying to retrieve media: " + mediaId, e);
 			throw new Exception("Unable to retrieve media.");
@@ -68,6 +73,25 @@ public class MediaService {
 		foundMedia.setGenres(media.getGenres());
 		foundMedia.setSummary(media.getSummary());
 		return mediaRepo.save(foundMedia);
+	}
+	
+	public double calculateAvgRating(Long mediaId) {
+		List<Review> allReviews = (List<Review>) reviewRepo.findAll();
+		List<Review> specificReviews = new ArrayList<Review>();
+		for(int i = 0; i < allReviews.size(); i++) {
+			if(allReviews.get(i).getMediaId() == mediaId) {
+				specificReviews.add(allReviews.get(i));
+			}
+		}
+		List<Double> ratings = new ArrayList<Double>();
+		double avgRating = 0;
+		for(int i = 0; i < specificReviews.size(); i++) {
+			ratings.add(specificReviews.get(i).getRating());
+		}
+		for(double rating : ratings) {
+			avgRating += rating;
+		}
+		return avgRating / ratings.size();
 	}
 	
 	public List<Media> suggestByGenreId(List<Media> media, List<Genre> genres, Long genreId) {

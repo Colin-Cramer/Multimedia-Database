@@ -2,8 +2,6 @@ package com.promineotech.multimediadatabase.service;
 
 import javax.naming.AuthenticationException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -18,8 +16,6 @@ public class AuthService {
 
 	@Autowired
 	private UserRepository repo;
-	
-//	private static final Logger logger = LogManager.getLogger(AuthService.class);
 	
 	public User register(Credentials cred) throws AuthenticationException {
 		User user = new User();
