@@ -12,22 +12,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Review {
 
-	private Long id;
+	private Long reviewId;
 	private String content;
 	private double rating;
 	private User user;
 	
 	@JsonIgnore
-	private Long mediaId;
+	private Media media;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
-		return id;
+		return reviewId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.reviewId = id;
 	}
 
 	public String getContent() {
@@ -58,12 +58,12 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name = "mediaId")
-	public Long getMediaId() {
-		return mediaId;
+	public Media getMedia() {
+		return media;
 	}
 	
-	public void setMediaId(Long mediaId) {
-		this.mediaId = id;
+	public void setMedia(Media mediaId) {
+		this.media = mediaId;
 	}
 
 }

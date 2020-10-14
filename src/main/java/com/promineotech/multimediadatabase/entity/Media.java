@@ -17,7 +17,7 @@ public class Media {
 	private Long mediaId;
 	private String title;
 	private String summary;
-//	private double avgRating;
+	private double avgRating;
 	private String creator;
 	private User user;
 	private Long genreId;
@@ -26,11 +26,11 @@ public class Media {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
+	public Long getMediaId() {
 		return mediaId;
 	}
 
-	public void setId(Long id) {
+	public void setMediaId(Long id) {
 		this.mediaId = id;
 	}
 
@@ -50,13 +50,13 @@ public class Media {
 		this.summary = summary;
 	}
 
-//	public double getAvgRating() {
-//		return avgRating;
-//	}
-//
-//	public void setAvgRating(double avgRating) {
-//		this.avgRating = avgRating;
-//	}
+	public double getAvgRating() {
+		return avgRating;
+	}
+
+	public void setAvgRating(double avgRating) {
+		this.avgRating = avgRating;
+	}
 
 	public String getCreator() {
 		return creator;

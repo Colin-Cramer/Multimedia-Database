@@ -1,5 +1,8 @@
 package com.promineotech.multimediadatabase.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +55,11 @@ public class ReviewService {
 			throw new Exception("User or Post does not Exist.");
 		}
 		review.setUser(user);
-		review.setMedia(media);
+		review.getMedia().setMediaId(mediaId);
+		review.setRating(review.getRating());
+		media.setAvgRating(calculateAvgRating(mediaId));
+		mediaRepo.save(media);
+		review.setContent(review.getContent());
 		return reviewRepo.save(review);
 	}
 	
@@ -75,4 +82,22 @@ public class ReviewService {
 		}
 	}
 	
+	public double calculateAvgRating(Long mediaId) {
+		List<Review> allReviews = (List<Review>) reviewRepo.findAll();
+		List<Review> specificReviews = new ArrayList<Review>();
+		for(int i = 0; i < allReviews.size(); i++) {
+			if(allReviews.get(i).getMedia().getMediaId() == mediaId) {
+				specificReviews.add(allReviews.get(i));
+			}
+		}
+		List<Double> ratings = new ArrayList<Double>();
+		double avgRating = 0;
+		for(int i = 0; i < specificReviews.size(); i++) {
+			ratings.add(specificReviews.get(i).getRating());
+		}
+		for(double rating : ratings) {
+			avgRating += rating;
+		}
+		return avgRating / ratings.size();
+	}
 }
