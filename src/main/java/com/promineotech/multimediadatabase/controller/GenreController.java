@@ -32,7 +32,7 @@ public class GenreController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createGenre(@RequestBody Genre genre) {
 		try {
-			return new ResponseEntity<Object>(service.createGenre(genre), HttpStatus.OK);
+			return new ResponseEntity<Object>(service.createGenre(genre), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

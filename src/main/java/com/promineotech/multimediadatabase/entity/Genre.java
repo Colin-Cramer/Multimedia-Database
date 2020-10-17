@@ -7,11 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Genre {
 
 	private Long genreId;
 	private String genreType;
+	
+	@JsonIgnore
 	private List<Media> media;
 
 	@Id

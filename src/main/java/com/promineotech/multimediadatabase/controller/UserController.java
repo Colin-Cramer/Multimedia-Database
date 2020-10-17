@@ -1,6 +1,7 @@
 package com.promineotech.multimediadatabase.controller;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,10 +46,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> updateUser(@RequestBody Credentials cred, @RequestBody User user, @PathVariable Long id) {
+	public ResponseEntity<Object> updateUser(@RequestBody User user, @PathVariable Long userId, HttpServletRequest request){
 		try {
-			return new ResponseEntity<Object>(authService.updateUser(cred, user, id), HttpStatus.OK);
-		} catch (Exception e) {
+			if(authService.isCorrectUser(authService.getToken(request), userId)) {
+				return new ResponseEntity<Object>(userService.updateUser(user, userId), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Object>("Unauthorized request.", HttpStatus.UNAUTHORIZED);
+			}
+		}catch(Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

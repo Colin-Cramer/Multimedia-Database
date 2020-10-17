@@ -16,7 +16,6 @@ public class Review {
 	private String content;
 	private double rating;
 	private User user;
-	
 	@JsonIgnore
 	private Media media;
 

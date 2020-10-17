@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Media {
 
@@ -19,9 +21,12 @@ public class Media {
 	private String summary;
 	private double avgRating;
 	private String creator;
+	@JsonIgnore
 	private User user;
+	@JsonIgnore
 	private Long genreId;
 	private List<Genre> genres;
+	@JsonIgnore
 	private List<Review> reviews;
 
 	@Id

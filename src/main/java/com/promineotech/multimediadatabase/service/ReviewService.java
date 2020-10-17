@@ -19,7 +19,6 @@ import com.promineotech.multimediadatabase.repository.UserRepository;
 public class ReviewService {
 
 	private static final Logger logger = LogManager.getLogger(ReviewService.class);
-
 	
 	@Autowired
 	private ReviewRepository reviewRepo;
@@ -52,14 +51,12 @@ public class ReviewService {
 		User user = userRepo.findOne(userId);
 		Media media = mediaRepo.findOne(mediaId);
 		if(user == null || media == null) {
-			throw new Exception("User or Post does not Exist.");
+			throw new Exception("User or Media does not Exist.");
 		}
 		review.setUser(user);
-		review.getMedia().setMediaId(mediaId);
-		review.setRating(review.getRating());
+		review.setMedia(media);
 		media.setAvgRating(calculateAvgRating(mediaId));
 		mediaRepo.save(media);
-		review.setContent(review.getContent());
 		return reviewRepo.save(review);
 	}
 	

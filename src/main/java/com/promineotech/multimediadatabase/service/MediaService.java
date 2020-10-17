@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.promineotech.multimediadatabase.entity.Genre;
 import com.promineotech.multimediadatabase.entity.Media;
 import com.promineotech.multimediadatabase.entity.User;
 import com.promineotech.multimediadatabase.repository.MediaRepository;
@@ -49,12 +50,14 @@ public class MediaService {
 		} else if(user.getLevel() != AccountLevel.ADMIN) {
 			throw new Exception("Only an admin can create a media page.");
 		}
+		media.setUser(user);
+		addGenresToList(media);
 		return mediaRepo.save(media);
 	}
 	
-	public Media updateMedia(Media media, Long userId, Long id) throws Exception {
+	public Media updateMedia(Media media, Long userId) throws Exception {
 		User user = userRepo.findOne(userId);
-		Media foundMedia = mediaRepo.findOne(id);
+		Media foundMedia = mediaRepo.findOne(media.getMediaId());
 		if(user.getLevel() != AccountLevel.ADMIN) {
 			throw new Exception("Only an admin can update a media page.");
 		}
@@ -62,10 +65,18 @@ public class MediaService {
 			throw new Exception("Media not found.");
 		}
 		foundMedia.setTitle(media.getTitle());
-		foundMedia.setGenres(media.getGenres());
 		foundMedia.setSummary(media.getSummary());
+		foundMedia.setCreator(media.getCreator());
+		foundMedia.setGenres(media.getGenres());
 		return mediaRepo.save(foundMedia);
 	}	
+	
+	private void addGenresToList(Media media) {
+		List<Genre> genres = media.getGenres();
+		for (Genre genre : genres) {
+			genre.getMedia().add(media);
+		}
+	}
 	
 	public List<Media> suggestByGenreId(Long genreId) {
 		List<Media> newMedia = (List<Media>) mediaRepo.findAllByGenreId(genreId);
