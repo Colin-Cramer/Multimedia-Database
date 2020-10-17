@@ -62,15 +62,6 @@ public class AuthService {
 		return jwt;
 	}
 	
-	public boolean isAdmin(String token) {
-		return ((String)Jwts.parser()
-				.setSigningKey(key)
-				.parseClaimsJws(token)
-				.getBody()
-				.get("level"))
-				.equals("ADMIN");
-	}
-	
 	public boolean isCorrectUser(String jwt, Long userId) {
 		return new Long((Integer)Jwts.parser()
 				.setSigningKey(key)
